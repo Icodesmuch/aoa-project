@@ -13,8 +13,8 @@ public class ChatLogParser {
         this.teacherName = teacherName;
     }
 
-    public ChatLineResult parseLine(String line, String teacherName) { 
-        ChatLineResult result = new ChatLineResult();
+    public ParsedLineResult parseLine(String line, String teacherName) { 
+        ParsedLineResult result = new ParsedLineResult();
 
         if (line.contains("From")) {
             result.setFrom(extractParticipantName(line));
