@@ -13,24 +13,23 @@ public class ChatLogParser {
         this.teacherName = teacherName;
     }
 
-    public ParsedLineResult parseLine(String line, String teacherName) { 
+    public ParsedLineResult parseLine(String line) { 
         ParsedLineResult result = new ParsedLineResult();
-
+    
         if (line.contains("From")) {
             result.setFrom(extractParticipantName(line));
-
+    
             if (result.getFrom().equals(teacherName)) {
-                result.setQuestion(isQuestion(line));
+                result.setIsQuestion(isQuestion(line)); 
             } else {
                 result.setStudentResponse(true);
                 result.setAnswerTime(extractAnswerTime(line));
             }
         }
         return result; 
-    } 
+    }
+    
 
-
-    // ... other fields and methods ...
 
     public String extractQuestionContent(String line) {
         if (line.startsWith("From " + teacherName + " To Everyone:")) { 
@@ -39,7 +38,6 @@ public class ChatLogParser {
         return null; 
     }
 
-    // ... other ChatLogParser methods ...
 
 
 
@@ -70,5 +68,17 @@ public class ChatLogParser {
 
         // Getters and setters 
         // ...
+        public String getFrom() { return from; }
+        public void setFrom(String from) { this.from = from; }
+        
+        public Boolean getIsQuestion(){ return isQuestion; }
+        public void setIsQuestion(Boolean isQuestion) {this.isQuestion = isQuestion;}
+
+        public Boolean getStudentResponse() { return studentResponse;}
+        public void setStudentResponse(Boolean studentResponse){ this.studentResponse = studentResponse;}
+
+        public LocalTime getAnswerTime() { return answerTime; }
+        public void setAnswerTime(LocalTime answerTime) { this.answerTime = answerTime; }
+
     }
 }
