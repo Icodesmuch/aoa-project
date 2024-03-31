@@ -36,6 +36,10 @@ public class Teacher {
 		return "\nTeacher's Name: " + name + 
 				"\nNumber of Questions Asked: " + questionsAsked ;
 	}
+
+	public void incrementQuestionsAsked() {
+		
+	}
 	
 	
 }

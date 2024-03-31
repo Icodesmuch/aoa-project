@@ -10,15 +10,18 @@ import java.util.Scanner;
 import participants.Student;
 import participants.StudentRecord;
 import participants.Teacher;
+import workset.ChatLogParser.ParsedLineResult;
 
 // ... imports ...
 
 public class ChatReader {
     private final String teacherName;
+	private final Teacher teach;
     private final ChatLogParser parser;   
 
     public ChatReader(String teacherName) {
         this.teacherName = teacherName;
+		this.teach = new Teacher();
         this.parser = new ChatLogParser(teacherName);
     }
 
@@ -30,12 +33,12 @@ public class ChatReader {
         try (Scanner scan = new Scanner(chatLog)) {
             while (scan.hasNextLine()) {
                 String line = scan.nextLine();
-                ChatLogParser.ChatLineResult result = parser.parseLine(line, teacherName); 
+                ParsedLineResult result = parser.parseLine(line); 
 
-                if (result.isQuestion()) teach.incrementQuestionsAsked(); 
+                if (result.getIsQuestion()) teach.incrementQuestionsAsked(); 
 
-                if (result.hasStudentResponse()) {
-                    StudentRecord record = studentRecords.computeIfAbsent(result.getStudentName(), StudentRecord::new);
+                if (result.getStudentResponse()) {
+                    StudentRecord record = studentRecords.computeIfAbsent(result.setStudentName(), StudentRecord::new);
                     record.processResponse(result.getAnswerTime(), result.getQuestionContent());
                 }
             }
